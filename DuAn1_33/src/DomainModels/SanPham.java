@@ -11,23 +11,19 @@ package DomainModels;
 public class SanPham {
 
     private String id;
+    private String idLoaiSP;
     private String ma;
     private String ten;
 
     public SanPham() {
     }
 
-    public SanPham(String ma, String ten) {
-        this.ma = ma;
-        this.ten = ten;
-    }
-
-    public SanPham(String id, String ma, String ten) {
+    public SanPham(String id, String idLoaiSP, String ma, String ten) {
         this.id = id;
+        this.idLoaiSP = idLoaiSP;
         this.ma = ma;
         this.ten = ten;
     }
-    
 
     public String getId() {
         return id;
@@ -35,6 +31,14 @@ public class SanPham {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getIdLoaiSP() {
+        return idLoaiSP;
+    }
+
+    public void setIdLoaiSP(String idLoaiSP) {
+        this.idLoaiSP = idLoaiSP;
     }
 
     public String getMa() {
@@ -51,11 +55,6 @@ public class SanPham {
 
     public void setTen(String ten) {
         this.ten = ten;
-    }
-
-    @Override
-    public String toString() {
-        return "SanPham{" + "id=" + id + ", ma=" + ma + ", ten=" + ten + '}';
     }
 
 }
