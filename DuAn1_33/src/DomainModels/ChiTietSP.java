@@ -11,10 +11,6 @@ package DomainModels;
 public class ChiTietSP {
 
     private String id;
-    private String idSP;
-    private String idNSX;
-    private String idMauSac;
-    private String idDSP;
     private SanPham sanPham;
     private MauSac mauSac;
     private DongSP dongSP;
@@ -41,56 +37,12 @@ public class ChiTietSP {
         this.giaBan = giaBan;
     }
 
-    public ChiTietSP(SanPham sanPham, MauSac mauSac, DongSP dongSP, NSX nSX, int namBH, String moTa, int soLuongTon, double giaNhap, double giaBan) {
-        this.sanPham = sanPham;
-        this.mauSac = mauSac;
-        this.dongSP = dongSP;
-        this.nSX = nSX;
-        this.namBH = namBH;
-        this.moTa = moTa;
-        this.soLuongTon = soLuongTon;
-        this.giaNhap = giaNhap;
-        this.giaBan = giaBan;
-    }
-
     public String getId() {
         return id;
     }
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public String getIdSP() {
-        return idSP;
-    }
-
-    public void setIdSP(String idSP) {
-        this.idSP = idSP;
-    }
-
-    public String getIdNSX() {
-        return idNSX;
-    }
-
-    public void setIdNSX(String idNSX) {
-        this.idNSX = idNSX;
-    }
-
-    public String getIdMauSac() {
-        return idMauSac;
-    }
-
-    public void setIdMauSac(String idMauSac) {
-        this.idMauSac = idMauSac;
-    }
-
-    public String getIdDSP() {
-        return idDSP;
-    }
-
-    public void setIdDSP(String idDSP) {
-        this.idDSP = idDSP;
     }
 
     public SanPham getSanPham() {
@@ -165,9 +117,7 @@ public class ChiTietSP {
         this.giaBan = giaBan;
     }
 
-    @Override
-    public String toString() {
-        return "ChiTietSP{" + "id=" + id + ", idSP=" + idSP + ", idNSX=" + idNSX + ", idMauSac=" + idMauSac + ", idDSP=" + idDSP + ", sanPham=" + sanPham + ", mauSac=" + mauSac + ", dongSP=" + dongSP + ", nSX=" + nSX + ", namBH=" + namBH + ", moTa=" + moTa + ", soLuongTon=" + soLuongTon + ", giaNhap=" + giaNhap + ", giaBan=" + giaBan + '}';
+    public Object[] toDataRow() {
+        return new Object[]{id, sanPham.getTen(), nSX.getTen(), mauSac.getTen(), dongSP.getTen(), namBH, moTa, soLuongTon, giaNhap, giaBan};
     }
-
 }
