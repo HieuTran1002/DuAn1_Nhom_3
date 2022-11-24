@@ -20,15 +20,16 @@ import java.util.List;
 public class SanPhamRepositories {
 
     public List<SanPham> getAll() {
-        String query = "SELECT [Id]"
-                + "      ,[Ma]"
-                + "      ,[Ten]"
+        String query = "SELECT [Id]\n"
+                + "      ,[IdLoaiSP]\n"
+                + "      ,[Ma]\n"
+                + "      ,[Ten]\n"
                 + "  FROM [dbo].[SanPham]";
-        try ( Connection con = DBConnection.getConnection();  PreparedStatement ps = con.prepareCall(query)) {
+        try (Connection con = DBConnection.getConnection(); PreparedStatement ps = con.prepareCall(query)) {
             List<SanPham> listsp = new ArrayList<>();
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                SanPham sp = new SanPham(rs.getString(1), rs.getString(2), rs.getString(3));
+                SanPham sp = new SanPham(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4));
                 listsp.add(sp);
             }
             return listsp;
@@ -40,15 +41,16 @@ public class SanPhamRepositories {
 
     public SanPham getOne(String ma) {
         String query = "SELECT [Id]"
+                + "      ,[IdLoaiSP]\n"
                 + "      ,[Ma]"
                 + "      ,[Ten]"
                 + "  FROM [dbo].[SanPham]"
                 + "  WHERE Ten = ?";
-        try ( Connection con = DBConnection.getConnection();  PreparedStatement ps = con.prepareCall(query)) {
+        try (Connection con = DBConnection.getConnection(); PreparedStatement ps = con.prepareCall(query)) {
             ps.setObject(1, ma);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                SanPham sp = new SanPham(rs.getString(1), rs.getString(2), rs.getString(3));
+                SanPham sp = new SanPham(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4));
                 return sp;
             }
         } catch (SQLException e) {
@@ -64,7 +66,7 @@ public class SanPhamRepositories {
                 + "           ,[Ten])\n"
                 + "     VALUES\n"
                 + "           (?,?)";
-        try ( Connection con = DBConnection.getConnection();  PreparedStatement ps = con.prepareCall(query)) {
+        try (Connection con = DBConnection.getConnection(); PreparedStatement ps = con.prepareCall(query)) {
             ps.setObject(1, sp.getMa());
             ps.setObject(2, sp.getTen());
             check = ps.executeUpdate();
@@ -77,7 +79,7 @@ public class SanPhamRepositories {
     public boolean updateSoLuong(String Id, int soLuong) {
         int chon = 0;
         String query = "UPDATE ChiTietSP SET SoLuongTon = ? WHERE Id = ?";
-        try ( Connection conn = DBConnection.getConnection();  PreparedStatement ps = conn.prepareStatement(query)) {
+        try (Connection conn = DBConnection.getConnection(); PreparedStatement ps = conn.prepareStatement(query)) {
             ps.setObject(1, soLuong);
             ps.setObject(2, Id);
             chon = ps.executeUpdate();

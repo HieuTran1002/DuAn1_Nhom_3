@@ -25,6 +25,12 @@ public class SanPham {
         this.ten = ten;
     }
 
+    public SanPham(String ma, String ten) {
+        this.ma = ma;
+        this.ten = ten;
+    }
+
+    
     public String getId() {
         return id;
     }
