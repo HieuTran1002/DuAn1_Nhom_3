@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  *
@@ -24,7 +25,7 @@ public class MauSacRepositories {
                 + "      ,[Ma]"
                 + "      ,[Ten]"
                 + "  FROM [dbo].[MauSac]";
-        try ( Connection con = DBConnection.getConnection();  PreparedStatement ps = con.prepareCall(query)) {
+        try (Connection con = DBConnection.getConnection(); PreparedStatement ps = con.prepareCall(query)) {
             List<MauSac> listms = new ArrayList<>();
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -44,7 +45,7 @@ public class MauSacRepositories {
                 + "      ,[Ten]"
                 + "  FROM [dbo].[MauSac]"
                 + "  WHERE Ten = ?";
-        try ( Connection con = DBConnection.getConnection();  PreparedStatement ps = con.prepareCall(query)) {
+        try (Connection con = DBConnection.getConnection(); PreparedStatement ps = con.prepareCall(query)) {
             ps.setObject(1, ten);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -56,20 +57,26 @@ public class MauSacRepositories {
         }
         return null;
     }
-    public boolean Add(MauSac ms) {
+
+    public boolean Add(MauSac mauSac) {
         int check = 0;
         String query = "INSERT INTO [dbo].[MauSac]\n"
-                + "           ([Ma]\n"
+                + "           ([Id]\n"
+                + "           ,[Ma]\n"
                 + "           ,[Ten])\n"
                 + "     VALUES\n"
-                + "           (?,?)";
-        try ( Connection con = DBConnection.getConnection();  PreparedStatement ps = con.prepareCall(query)) {
-            ps.setObject(1, ms.getMa());
-            ps.setObject(2, ms.getTen());
+                + "           (?\n"
+                + "           ,?\n"
+                + "           ,?)";
+        try (Connection con = DBConnection.getConnection(); PreparedStatement ps = con.prepareCall(query)) {
+            ps.setObject(1, UUID.randomUUID());
+            ps.setObject(1, mauSac.getMa());
+            ps.setObject(2, mauSac.getTen());
             check = ps.executeUpdate();
+            return check == 1;
         } catch (SQLException e) {
             e.printStackTrace(System.out);
         }
-        return check > 0;
+        return check == 0;
     }
 }
