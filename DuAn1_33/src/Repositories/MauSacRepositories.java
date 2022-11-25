@@ -60,18 +60,25 @@ public class MauSacRepositories {
 
     public boolean Add(MauSac mauSac) {
         int check = 0;
-        String query = "INSERT INTO [dbo].[MauSac]\n"
-                + "           ([Id]\n"
-                + "           ,[Ma]\n"
-                + "           ,[Ten])\n"
-                + "     VALUES\n"
-                + "           (?\n"
-                + "           ,?\n"
-                + "           ,?)";
+        String query = "IF NOT EXISTS (SELECT Id,Ten,Ma FROM dbo.MauSac WHERE Ten = ?)\n"
+                + "BEGIN\n"
+                + "INSERT INTO dbo.MauSac\n"
+                + "(\n"
+                + "    Id,\n"
+                + "    Ma,\n"
+                + "    Ten\n"
+                + ")\n"
+                + "VALUES\n"
+                + "(   ?, -- Id - uniqueidentifier\n"
+                + "    ?,   -- Ma - varchar(20)\n"
+                + "    ?   -- Ten - nvarchar(30)\n"
+                + "    )\n"
+                + "END";
         try (Connection con = DBConnection.getConnection(); PreparedStatement ps = con.prepareCall(query)) {
-            ps.setObject(1, UUID.randomUUID());
-            ps.setObject(1, mauSac.getMa());
-            ps.setObject(2, mauSac.getTen());
+            ps.setObject(1, mauSac.getTen());
+            ps.setObject(2, UUID.randomUUID());
+            ps.setObject(3, mauSac.getMa());
+            ps.setObject(4, mauSac.getTen());
             check = ps.executeUpdate();
             return check == 1;
         } catch (SQLException e) {
