@@ -23,7 +23,7 @@ public class DBConnection {
 
     public static final String USERNAME = "sa";
 
-    public static final String PASSWORD = "phamhai308";
+    public static final String PASSWORD = "123456";
 
     public static Connection getConnection() {
         // Create a variable for the connection string.

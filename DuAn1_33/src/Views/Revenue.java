@@ -1,10 +1,56 @@
 package Views;
 
+import Services.ServiceImpl.ThongKeServiceImpl;
+import Services.ThongKeService;
+import ViewModels.ThongKeViewModel;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+
 public class Revenue extends javax.swing.JFrame {
+
+    private DefaultTableModel dtm = new DefaultTableModel();
+    private List<ThongKeViewModel> listThongKeViewModels = new ArrayList<>();
+    private ThongKeViewModel thongKeViewModel = new ThongKeViewModel();
+    private ThongKeService thongKeService = new ThongKeServiceImpl();
 
     public Revenue() {
         initComponents();
+        String header[] = {"STT", "ID", "Số Lượng Sản Phẩm Bán Ra", "Đơn Giá", "Tổng Tiền", "Doanh Thu", "Ngày"};
+        dtm.setColumnIdentifiers(header);
+        tableRevenue.setModel(dtm);
+//        showLable(listThongKeViewModels = thongKeService.getAll());
+        showDataList(listThongKeViewModels = thongKeService.getAll()
+        );
     }
+
+    private void showDataList(List<ThongKeViewModel> list) {
+        dtm.setRowCount(0);
+        int STT = 1;
+        for (ThongKeViewModel thongKeViewModel1 : list) {
+            Double tongTien = thongKeViewModel1.getSoLuongBan() * thongKeViewModel1.getDonGia();
+            Double doanhThu = thongKeViewModel1.getSoLuongBan() * thongKeViewModel1.getDonGia();
+            dtm.addRow(new Object[]{STT++, thongKeViewModel1.getId(), thongKeViewModel1.getSoLuongBan(), thongKeViewModel1.getDonGia(), tongTien, doanhThu, thongKeViewModel1.getNgay()});
+        }
+    }
+
+//    private void showLable(List<ThongKeViewModel> listThongKe) {
+//        for (ThongKeViewModel thongKeViewModel1 : listThongKe) {
+//            Double tongTien = thongKeViewModel1.getSoLuongBan() * thongKeViewModel1.getDonGia();
+//            Double doanhThu = thongKeViewModel1.getSoLuongBan() * thongKeViewModel1.getDonGia();
+//            Double tongTienHoaDon = tongTien + (tongTien++);
+////            Double tongTienHoaDon = tongTien;
+//            lblTongDoanhThu.setText(String.valueOf(tongTienHoaDon));
+//            
+//        }
+//        for (int i = 0; i < thongKeViewModel.getIdChiTietSP().length(); i++) {
+//                int slhd = ++i;
+//                System.out.println(slhd);
+//            }
+//            lblSoHoaDon.setText(String.valueOf(thongKeViewModel.getIdHoaDon().length()));
+//        
+//
+//    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -17,7 +63,6 @@ public class Revenue extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         btnRevenue = new javax.swing.JButton();
         btnRefresh = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
         jTextField1 = new javax.swing.JTextField();
         jTextField2 = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -54,9 +99,6 @@ public class Revenue extends javax.swing.JFrame {
 
         btnRefresh.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/Refresh-icon.png"))); // NOI18N
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/Print Sale.png"))); // NOI18N
-        jButton1.setText("In Thống Kê");
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -73,9 +115,7 @@ public class Revenue extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnRevenue)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnRevenue, javax.swing.GroupLayout.DEFAULT_SIZE, 291, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -86,15 +126,13 @@ public class Revenue extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addContainerGap()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(btnRefresh, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addComponent(btnRefresh, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(35, 35, 35)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 22, Short.MAX_VALUE)
+                                        .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                             .addComponent(jLabel2)
                                             .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
@@ -177,7 +215,7 @@ public class Revenue extends javax.swing.JFrame {
 
     private void btnBackHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackHomeActionPerformed
         // TODO add your handling code here:
-         new Home().setVisible(true);
+        new Home().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnBackHomeActionPerformed
 
@@ -185,7 +223,6 @@ public class Revenue extends javax.swing.JFrame {
     private javax.swing.JButton btnBackHome;
     private javax.swing.JButton btnRefresh;
     private javax.swing.JButton btnRevenue;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
