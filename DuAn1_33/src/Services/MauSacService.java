@@ -15,7 +15,7 @@ public interface MauSacService {
 
     List<MauSac> getAll();
 
-    MauSac getOne(String id);
+    MauSac getOne(String ten);
     
     String add(MauSac ms);
 }

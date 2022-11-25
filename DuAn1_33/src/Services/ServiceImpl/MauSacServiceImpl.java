@@ -23,8 +23,8 @@ public class MauSacServiceImpl implements MauSacService {
     }
 
     @Override
-    public MauSac getOne(String id) {
-        return msr.getOne(id);
+    public MauSac getOne(String ten) {
+        return msr.getOne(ten);
     }
 
     @Override

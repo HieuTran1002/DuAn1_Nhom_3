@@ -38,14 +38,14 @@ public class MauSacRepositories {
         return null;
     }
 
-    public MauSac getOne(String ma) {
+    public MauSac getOne(String ten) {
         String query = "SELECT [Id]"
                 + "      ,[Ma]"
                 + "      ,[Ten]"
                 + "  FROM [dbo].[MauSac]"
                 + "  WHERE Ten = ?";
         try ( Connection con = DBConnection.getConnection();  PreparedStatement ps = con.prepareCall(query)) {
-            ps.setObject(1, ma);
+            ps.setObject(1, ten);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 MauSac ms = new MauSac(rs.getString(1), rs.getString(2), rs.getString(3));
