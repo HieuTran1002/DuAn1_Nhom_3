@@ -15,7 +15,9 @@ public interface LoaiSPService {
 
     boolean Add(LoaiSP loaiSP);
 
-    LoaiSP getOne(String ten);
+    LoaiSP getOneID(String id);
 
     List<LoaiSP> getAll();
+    
+    LoaiSP getOneTen(String ten);
 }

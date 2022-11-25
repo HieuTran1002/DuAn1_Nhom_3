@@ -39,7 +39,7 @@ public class SanPhamRepositories {
         return null;
     }
 
-    public SanPham getOne(String ma) {
+    public SanPham getOne(String ten) {
         String query = "SELECT [Id]"
                 + "      ,[IdLoaiSP]\n"
                 + "      ,[Ma]"
@@ -47,7 +47,7 @@ public class SanPhamRepositories {
                 + "  FROM [dbo].[SanPham]"
                 + "  WHERE Ten = ?";
         try (Connection con = DBConnection.getConnection(); PreparedStatement ps = con.prepareCall(query)) {
-            ps.setObject(1, ma);
+            ps.setObject(1, ten);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 SanPham sp = new SanPham(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4));
@@ -62,13 +62,20 @@ public class SanPhamRepositories {
     public boolean Add(SanPham sp) {
         int check = 0;
         String query = "INSERT INTO [dbo].[SanPham]\n"
-                + "           ([Ma]\n"
+                + "           ([Id]\n"
+                + "           ,[IdLoaiSP]\n"
+                + "           ,[Ma]\n"
                 + "           ,[Ten])\n"
                 + "     VALUES\n"
-                + "           (?,?)";
+                + "           (?\n"
+                + "           ,?\n"
+                + "           ,?\n"
+                + "           ,?)";
         try (Connection con = DBConnection.getConnection(); PreparedStatement ps = con.prepareCall(query)) {
-            ps.setObject(1, sp.getMa());
-            ps.setObject(2, sp.getTen());
+            ps.setObject(1, sp.getId());
+            ps.setObject(2, sp.getIdLoaiSP());
+            ps.setObject(3, sp.getMa());
+            ps.setObject(4, sp.getTen());
             check = ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace(System.out);

@@ -40,7 +40,7 @@ public class ChiTietSPRepositories {
                 MauSac ms = new MauSac(rs.getString(10));
                 DongSP dsp = new DongSP(rs.getString(8));
                 NSX nsx = new NSX(rs.getString(9));
-                ChiTietSP ctsp = new ChiTietSP(rs.getString(1), sp, ms, dsp, nsx, rs.getInt(4), rs.getString(11), rs.getInt(5), rs.getDouble(6), rs.getDouble(7));
+                ChiTietSP ctsp = new ChiTietSP(rs.getString(1), sp, nsx, ms, dsp, rs.getInt(4), rs.getString(11), rs.getInt(5), rs.getInt(6), rs.getInt(7));
                 list.add(ctsp);
             }
             return list;
@@ -66,7 +66,7 @@ public class ChiTietSPRepositories {
                 MauSac ms = new MauSac(rs.getString(10));
                 DongSP dsp = new DongSP(rs.getString(8));
                 NSX nsx = new NSX(rs.getString(9));
-                ChiTietSP ctsp = new ChiTietSP(rs.getString(1), sp, ms, dsp, nsx, rs.getInt(4), rs.getString(11), rs.getInt(5), rs.getDouble(6), rs.getDouble(7));
+                ChiTietSP ctsp = new ChiTietSP(rs.getString(1), sp, nsx, ms, dsp, rs.getInt(4), rs.getString(11), rs.getInt(5), rs.getInt(6), rs.getInt(7));
                 list.add(ctsp);
             }
             return list;
@@ -76,32 +76,33 @@ public class ChiTietSPRepositories {
         return null;
     }
 
-    public List<SanPhamViewModel> getAll() {
-        String query = "select SanPham.Ma,SanPham.Ten,ChiTietSP.NamBH,ChiTietSP.MoTa,ChiTietSP.SoLuongTon,ChiTietSP.GiaNhap,ChiTietSP.GiaBan from ChiTietSP join SanPham on \n" +
-"SanPham.Id = ChiTietSP.IdSP";
-                
-        try ( Connection con = DBConnection.getConnection();  PreparedStatement ps = con.prepareStatement(query)) {
-            List<SanPhamViewModel> list = new ArrayList<>();
+
+    public List<ChiTietSP> getAll() {
+        String query = "SELECT dbo.ChiTietSP.Id AS Expr1, dbo.SanPham.*, dbo.NSX.*, dbo.MauSac.*, dbo.DongSP.*, dbo.ChiTietSP.NamBH, dbo.ChiTietSP.MoTa, dbo.ChiTietSP.SoLuongTon, dbo.ChiTietSP.GiaNhap, dbo.ChiTietSP.GiaBan\n"
+                + "FROM     dbo.ChiTietSP INNER JOIN\n"
+                + "                  dbo.SanPham ON dbo.ChiTietSP.IdSP = dbo.SanPham.Id INNER JOIN\n"
+                + "                  dbo.MauSac ON dbo.ChiTietSP.IdMauSac = dbo.MauSac.Id INNER JOIN\n"
+                + "                  dbo.NSX ON dbo.ChiTietSP.IdNsx = dbo.NSX.Id INNER JOIN\n"
+                + "                  dbo.DongSP ON dbo.ChiTietSP.IdDongSP = dbo.DongSP.Id INNER JOIN\n"
+                + "                  dbo.LoaiSP ON dbo.SanPham.IdLoaiSP = dbo.LoaiSP.Id";
+        try (Connection con = DBConnection.getConnection(); PreparedStatement ps = con.prepareStatement(query);) {
+            List<ChiTietSP> listCTSP = new ArrayList<>();
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                SanPhamViewModel chiTietSanPhamViewModel = new SanPhamViewModel();
-                
-                chiTietSanPhamViewModel.setMaSanPham(rs.getString(1));
-                chiTietSanPhamViewModel.setTenSanPham(rs.getString(2));
-                chiTietSanPhamViewModel.setNamBH(rs.getInt(3));
-                chiTietSanPhamViewModel.setMoTa(rs.getString(4));
-                chiTietSanPhamViewModel.setSoLuong(rs.getInt(5));
-                chiTietSanPhamViewModel.setGiaNhap(rs.getBigDecimal(6));
-                chiTietSanPhamViewModel.setGiaBan(rs.getBigDecimal(7));                                          
-                
-                list.add(chiTietSanPhamViewModel);
+                SanPham sanPham = new SanPham(rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5));
+                NSX nsx = new NSX(rs.getString(6), rs.getString(7), rs.getString(8));
+                MauSac mauSac = new MauSac(rs.getString(9), rs.getString(10), rs.getString(11));
+                DongSP dongSP = new DongSP(rs.getString(12), rs.getString(13), rs.getString(14));
+                ChiTietSP ctsp = new ChiTietSP(rs.getString(1), sanPham, nsx, mauSac, dongSP, rs.getInt(15), rs.getString(16), rs.getInt(17), rs.getInt(18), rs.getInt(19));
+                listCTSP.add(ctsp);
             }
-            return list;
+            return listCTSP;
         } catch (SQLException e) {
             e.printStackTrace(System.out);
         }
         return null;
     }
+
 //    public List<ChiTietSP> getTable() {
 //        String query = "";
 //        try ( Connection con = DBConnection.getConnection();  PreparedStatement ps = con.prepareStatement(query)) {
@@ -197,10 +198,4 @@ public class ChiTietSPRepositories {
         return check > 0;
     }
 
-    public static void main(String[] args) {
-        List<SanPhamViewModel> list = new ChiTietSPRepositories().getAll();
-        for (SanPhamViewModel chiTietSanPhamViewModel : list) {
-            System.out.println(chiTietSanPhamViewModel.toString());
-        }
-    }
 }

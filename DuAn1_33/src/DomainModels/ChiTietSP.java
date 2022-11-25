@@ -12,24 +12,24 @@ public class ChiTietSP {
 
     private String id;
     private SanPham sanPham;
+    private NSX nSX;    
     private MauSac mauSac;
     private DongSP dongSP;
-    private NSX nSX;
     private int namBH;
     private String moTa;
     private int soLuongTon;
-    private double giaNhap;
-    private double giaBan;
+    private int giaNhap;
+    private int giaBan;
 
     public ChiTietSP() {
     }
 
-    public ChiTietSP(String id, SanPham sanPham, MauSac mauSac, DongSP dongSP, NSX nSX, int namBH, String moTa, int soLuongTon, double giaNhap, double giaBan) {
+    public ChiTietSP(String id, SanPham sanPham, NSX nSX, MauSac mauSac, DongSP dongSP, int namBH, String moTa, int soLuongTon, int giaNhap, int giaBan) {
         this.id = id;
         this.sanPham = sanPham;
+        this.nSX = nSX;
         this.mauSac = mauSac;
         this.dongSP = dongSP;
-        this.nSX = nSX;
         this.namBH = namBH;
         this.moTa = moTa;
         this.soLuongTon = soLuongTon;
@@ -53,6 +53,14 @@ public class ChiTietSP {
         this.sanPham = sanPham;
     }
 
+    public NSX getnSX() {
+        return nSX;
+    }
+
+    public void setnSX(NSX nSX) {
+        this.nSX = nSX;
+    }
+
     public MauSac getMauSac() {
         return mauSac;
     }
@@ -67,14 +75,6 @@ public class ChiTietSP {
 
     public void setDongSP(DongSP dongSP) {
         this.dongSP = dongSP;
-    }
-
-    public NSX getnSX() {
-        return nSX;
-    }
-
-    public void setnSX(NSX nSX) {
-        this.nSX = nSX;
     }
 
     public int getNamBH() {
@@ -101,19 +101,19 @@ public class ChiTietSP {
         this.soLuongTon = soLuongTon;
     }
 
-    public double getGiaNhap() {
+    public int getGiaNhap() {
         return giaNhap;
     }
 
-    public void setGiaNhap(double giaNhap) {
+    public void setGiaNhap(int giaNhap) {
         this.giaNhap = giaNhap;
     }
 
-    public double getGiaBan() {
+    public int getGiaBan() {
         return giaBan;
     }
 
-    public void setGiaBan(double giaBan) {
+    public void setGiaBan(int giaBan) {
         this.giaBan = giaBan;
     }
 

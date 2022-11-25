@@ -18,7 +18,7 @@ public class ChiTietSPServiceImpl implements ChiTietSPService {
 
     ChiTietSPRepositories ctspr = new ChiTietSPRepositories();
 
-    public List<SanPhamViewModel> getAll() {
+    public List<ChiTietSP> getAll() {
         return ctspr.getAll();
     }
 

@@ -21,13 +21,18 @@ public class LoaiSPServiceImpl implements LoaiSPService{
     }
 
     @Override
-    public LoaiSP getOne(String ten) {
-        return loaiSPRepo.getOne(ten);
+    public LoaiSP getOneID(String id) {
+        return loaiSPRepo.getOneId(id);
     }
 
     @Override
     public List<LoaiSP> getAll() {
         return loaiSPRepo.getAll();
+    }
+
+    @Override
+    public LoaiSP getOneTen(String ten) {
+        return loaiSPRepo.getOneTen(ten);
     }
     
 }

@@ -43,7 +43,6 @@ public class ViewBanHang extends javax.swing.JFrame {
     private List<NSX> listnsx = new ArrayList<>();
     private List<SanPham> listsp = new ArrayList<>();
     private List<HoaDon> listHD = new ArrayList<>();
-    private List<SanPhamViewModel> listSPVM = new ArrayList<>();
     private List<ViewBanHangModels> listViewBanHangModels = new ArrayList<>();
     private List<SanPhamUpdateViewModel> listChiTietHoaDonViewModels = new ArrayList<>();
     private List<HoaDonViewModel> listHoaDonViewModels = new ArrayList<>();
@@ -67,7 +66,7 @@ public class ViewBanHang extends javax.swing.JFrame {
         tbHoaDon.setModel(dtm);
         tbGioHang.setModel(dtmGH);
         tbCTSanPham.setModel(dtmSP);
-        listSPVM = ctspi.getAll();
+        listctsp = ctspi.getAll();
         listdsp = dspi.getAll();
         listms = msi.getAll();
         listnsx = nsxi.getAll();
@@ -77,15 +76,14 @@ public class ViewBanHang extends javax.swing.JFrame {
         rdoChuaThanhToan.setSelected(true);
         rdoDaThanhToan.setSelected(false);
 
-        showDataTableSanPham(listSPVM);
+        showDataTableSanPham(listctsp);
         showDataTableAll(listHoaDonViewModels);
     }
-  private void showDataTableSanPham(List<SanPhamViewModel> listSP) {
+  private void showDataTableSanPham(List<ChiTietSP> listSP) {
         int STT = 1;
         dtmSP.setRowCount(0);
-        for (SanPhamViewModel sanPhamViewModelSP : listSP) {
-            dtmSP.addRow(new Object[]{STT++, sanPhamViewModelSP.getMaSanPham(), sanPhamViewModelSP.getTenSanPham(), sanPhamViewModelSP.getNamBH(),
-                sanPhamViewModelSP.getMoTa(), sanPhamViewModelSP.getSoLuong(), sanPhamViewModelSP.getGiaNhap(), sanPhamViewModelSP.getGiaBan()});
+        for (ChiTietSP ctsp : listSP) {
+            dtmSP.addRow(ctsp.toDataRow());
         }
     }
    
@@ -474,10 +472,10 @@ public class ViewBanHang extends javax.swing.JFrame {
         int soLuongNhap = Integer.valueOf(JOptionPane.showInputDialog("xin mời nhập số lượng"));
         int row = tbCTSanPham.getSelectedRow();
         int soLuong = (int) tbCTSanPham.getValueAt(row, 5);
-        SanPhamViewModel sanPhamViewModel = listSPVM.get(row);
-        sanPhamViewModel.setSoLuong(soLuong - soLuongNhap);
-        String sua = sanPhamService.update(sanPhamViewModel.getIdSanPham(), soLuong - soLuongNhap);
-        showDataTableSanPham(listSPVM);
+        ChiTietSP sanPhamViewModel = listctsp.get(row);
+        sanPhamViewModel.setSoLuongTon(soLuong - soLuongNhap);
+        String sua = sanPhamService.update(sanPhamViewModel.getSanPham().getId(), soLuong - soLuongNhap);
+        showDataTableSanPham(listctsp);
         ViewBanHangModels viewBanHangModels = new ViewBanHangModels();
         String headerSP[] = {"STT", "Mã SP", "Tên SP", "Năm Bảo Hành", "Mô Tả", "SL SP", "Giá Nhập", "Giá Bán"};
 
