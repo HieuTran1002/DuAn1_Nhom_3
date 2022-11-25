@@ -276,7 +276,7 @@ public class Home extends javax.swing.JFrame {
     private void btnProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProductActionPerformed
         // TODO add your handling code here:
         JOptionPane.showMessageDialog(rootPane, "Bạn Đang Vào Hệ Thống Sản Phẩm");
-        new UpdateProducts().setVisible(true);
+        new Product().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnProductActionPerformed
 

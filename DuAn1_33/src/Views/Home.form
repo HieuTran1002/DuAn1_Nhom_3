@@ -92,7 +92,7 @@
                   <Component id="lblSoftwareName" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="69" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="btnSale" pref="128" max="32767" attributes="0"/>
+                      <Component id="btnSale" max="32767" attributes="0"/>
                       <Component id="btnProduct" alignment="0" max="32767" attributes="0"/>
                       <Component id="btnOrders" alignment="0" max="32767" attributes="0"/>
                       <Component id="btnData" alignment="0" max="32767" attributes="0"/>
