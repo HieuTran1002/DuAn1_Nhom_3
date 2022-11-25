@@ -1,8 +1,13 @@
 package Views;
 
+import DomainModels.TaiKhoan;
+import Services.ServiceImpl.TaiKhoanServiceImpl;
 import javax.swing.JOptionPane;
 
 public class Login extends javax.swing.JFrame {
+
+    private TaiKhoan tk = new TaiKhoan();
+    private TaiKhoanServiceImpl tksi = new TaiKhoanServiceImpl();
 
     public Login() {
         initComponents();
@@ -12,6 +17,7 @@ public class Login extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPasswordField1 = new javax.swing.JPasswordField();
         jLabel3 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
@@ -25,6 +31,8 @@ public class Login extends javax.swing.JFrame {
         btnChangePass = new javax.swing.JButton();
         btnExit = new javax.swing.JButton();
         lblStatus = new javax.swing.JLabel();
+
+        jPasswordField1.setText("jPasswordField1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -86,6 +94,11 @@ public class Login extends javax.swing.JFrame {
         btnLogin.setText("Đăng Nhập");
         btnLogin.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btnLogin.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        btnLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLoginActionPerformed(evt);
+            }
+        });
 
         btnChangePass.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         btnChangePass.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/ChangePass.png"))); // NOI18N
@@ -98,6 +111,11 @@ public class Login extends javax.swing.JFrame {
         btnExit.setText("Thoát");
         btnExit.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btnExit.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        btnExit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExitActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -159,7 +177,34 @@ public class Login extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
+        // TODO add your handling code here:
+        String user = userName.getText();
+        String pass = new String(passWord.getPassword());
+        TaiKhoan check = tksi.getOne(user);
+        if (check.getTenTK().equalsIgnoreCase(user) && check.getPassTK().equalsIgnoreCase(pass)) {
+            Home h = new Home();
+            HomeUser hu = new HomeUser();
+            String vaiTro = check.getVaiTro();
+            if (vaiTro.equalsIgnoreCase("QUANTRIVIEN")) {
+                JOptionPane.showMessageDialog(rootPane, "Bạn đăng vào hệ thống Quản Lý");
+                h.setVisible(true);
+                this.dispose();
+            }
+            if (vaiTro.equalsIgnoreCase("NHANVIEN")) {
+                JOptionPane.showMessageDialog(rootPane, "Bạn đăng vào hệ thống Nhân Viên");
+                hu.setVisible(true);
+                this.dispose();;
+            }
+        }
+    }//GEN-LAST:event_btnLoginActionPerformed
+
+    private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_btnExitActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -207,6 +252,7 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JLabel lblStatus;
     private javax.swing.JPasswordField passWord;
     private javax.swing.JTextField userName;
