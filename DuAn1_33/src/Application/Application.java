@@ -12,6 +12,6 @@ public class Application {
 
     public static void main(String[] args) {
         new Views.Revenue().setVisible(true);
-        System.out.println("ngaso vl");
+       
     }
 }
